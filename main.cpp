@@ -1,16 +1,16 @@
 #include <iostream>
 #include "utils/Menu.h"
 #include <string.h>
-
+#include "Graph.h"
 std::vector<MenuItem> displayOptions = {{"display matrix", {}},
                                         {"display list", {}},
                                         {"exit", {}}};
 
 std::vector<MenuItem> menuItems = {{"read from file", {}},
-                                       {"generate graph", {}},
-                                       {"display graph", {displayOptions}},
-                                       {"run algorithm", {}},
-                                       {"exit", {}}};
+                                   {"generate graph", {}},
+                                   {"display graph", {displayOptions}},
+                                   {"run algorithm", {}},
+                                   {"exit", {}}};
 
 std::vector<MenuItem> mainMenuItems = {{"Brute Force", {menuItems}},
                                        {"B&B", {menuItems}},
@@ -19,7 +19,7 @@ std::vector<MenuItem> mainMenuItems = {{"Brute Force", {menuItems}},
 
 std::vector<MenuItem> testMenuItems = {{"test brute force", {}},
                                        {"test B&B", {}},
-                                        {"test DP", {}},
+                                       {"test DP", {}},
                                        {"exit", {}}};
 
 int main(int argc, char const *argv[])
@@ -30,14 +30,15 @@ int main(int argc, char const *argv[])
         for (int i = 0; i < argc; i++)
             if (strcmp(argv[i], "-t") == 0)
             {
-                Menu menu("Test Menu", testMenuItems);
+                Menu menu("Test Menu", testMenuItems, new Graph(0));
                 menu.run();
             }
     }
     else
     {
-        Menu menu("Main Menu", mainMenuItems);
+        Menu menu("Main Menu", mainMenuItems, new Graph(0));
         menu.run();
     }
+
     return 0;
 }

@@ -1,11 +1,12 @@
 #include "Menu.h"
+#include "../Graph.h"
 #ifdef _WIN32
 #define CLEAR "cls"
 #else
 #define CLEAR "clear"
 #endif
 
-Menu::Menu(std::string name, std::vector<MenuItem> menuItems) : menuName(name), menuItems(menuItems), innerLoop(false)
+Menu::Menu(std::string name, std::vector<MenuItem> menuItems, Graph *graph) : menuName(name), menuItems(menuItems), innerLoop(false), graph(graph)
 {
 }
 // runs menu
@@ -33,7 +34,7 @@ bool Menu::run()
                 innerLoop = true;
                 while (innerLoop)
                 {
-                    Menu menu(chosenItem.str, chosenItem.menuItems);
+                    Menu menu(chosenItem.str, chosenItem.menuItems, graph);
                     innerLoop = menu.run();
                 }
             }
@@ -42,21 +43,45 @@ bool Menu::run()
                 std::string chosenItemString = chosenItem.str;
                 if (chosenItemString == "exit")
                     return false;
-                // else if (chosenItemString == "read from file")
-                // {
-                //     std::ifstream file(getStringInput("Enter filename: "));
-                //     if (!file)
-                //     {
-                //         std::cout << "Unable to open file" << '\n';
-                //         waitForUser();
-                //     }
-                //     else
-                //     {
-                //         file.close();
-                //         std::cout << "File read successfully - Graph loaded" << '\n';
-                //         waitForUser();
-                //     }
-                // }
+                else if (chosenItemString == "read from file")
+                {
+                    std::ifstream file(getStringInput("Enter filename: "));
+                    if (!file)
+                    {
+                        std::cout << "Unable to open file" << '\n';
+                        waitForUser();
+                    }
+                    else
+                    {
+                        int numVertices;
+                        file >> numVertices;
+                        delete graph;
+                        graph = new Graph(numVertices);
+                        int weight;
+                        for (int i = 0; i < numVertices; i++)
+                        {
+                            for (int j = 0; j < numVertices; j++)
+                            {
+                                file >> weight;
+                                graph->addEdge(i, j, weight);
+                            }
+                        }
+                        std::cout << graph->toString() << '\n';
+                        file.close();
+                        std::cout << "File read successfully - Graph loaded" << '\n';
+                        waitForUser();
+                    }
+                }
+                else if (chosenItemString == "display matrix")
+                {
+                    std::cout << graph->toString() << '\n';
+                    waitForUser();
+                }
+                else if (chosenItemString == "run algorithm")
+                {
+                    waitForUser();
+                }
+
                 else
                 {
                     std::cout << "Not implemented yet" << std::endl;
