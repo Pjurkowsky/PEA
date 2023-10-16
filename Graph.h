@@ -29,9 +29,11 @@ public:
     //  Method to solve ATSP problem using brute force
     int bruteForceTSP(int startVertex);
 
-    int calculateCost(std::vector<int> &path) const;
+    int calculateCost(std::vector<int> &path);
 
-    void findHamiltonianCycles(std::vector<int> &path, std::vector<bool> &visited, int &minCost) const;
+    void findHamiltonianCycles(std::vector<int> &path, std::vector<bool> &visited, int &minCost);
+
+    void printOptimalPath() const;
 
 private:
     // 2D vector to store the weights of edges between vertices
@@ -39,6 +41,8 @@ private:
 
     // Number of vertices in the graph
     int numVertices;
+
+    std::vector<int> optimalPath;
 
     // Number of edges in the graph
     int numEdges;

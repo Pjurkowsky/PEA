@@ -7,6 +7,7 @@ Graph::Graph(int numVertices)
     this->numVertices = numVertices;
     this->numEdges = 0;
     adjacencyMatrix.resize(numVertices, std::vector<int>(numVertices, -1));
+    optimalPath.reserve(numVertices);
 }
 
 void Graph::addEdge(int u, int v, int weight)
@@ -55,11 +56,7 @@ std::vector<std::vector<int>> Graph::getAdjecencyMatrix() const
     return adjacencyMatrix;
 }
 
-int Graph::bruteForceTSP(int startVertex)
-{
-}
-
-int Graph::calculateCost(std::vector<int> &path) const
+int Graph::calculateCost(std::vector<int> &path)
 {
     int cost = 0;
     for (int i = 0; i < path.size() - 1; i++)
@@ -70,7 +67,7 @@ int Graph::calculateCost(std::vector<int> &path) const
     return cost;
 }
 
-void Graph::findHamiltonianCycles(std::vector<int> &path, std::vector<bool> &visited, int &minCost) const
+void Graph::findHamiltonianCycles(std::vector<int> &path, std::vector<bool> &visited, int &minCost)
 {
     // if all vertices are visited and there is an edge from the last vertex to the first vertex
     if (path.size() == numVertices && adjacencyMatrix[path.back()][path.front()] != -1)
@@ -79,13 +76,15 @@ void Graph::findHamiltonianCycles(std::vector<int> &path, std::vector<bool> &vis
         if (currentCost < minCost)
         {
             minCost = currentCost;
-            std::cout << "New minimum cost: " << minCost << '\n';
-            std::cout << "Path: ";
+            // std::cout << "New minimum cost: " << minCost << '\n';
+            // std::cout << "Path: ";
+            optimalPath.clear();
             for (int i = 0; i < path.size(); i++)
             {
-                std::cout << path[i] << " ";
+                // std::cout << path[i] << " ";
+                optimalPath.push_back(path[i]);
             }
-            std::cout << '\n';
+            // std::cout << '\n';
         }
         return;
     }
@@ -102,4 +101,14 @@ void Graph::findHamiltonianCycles(std::vector<int> &path, std::vector<bool> &vis
             path.pop_back();
         }
     }
+}
+
+void Graph::printOptimalPath() const
+{
+    std::cout << "Optimal path: ";
+    for (int i = 0; i < optimalPath.size(); i++)
+    {
+        std::cout << optimalPath[i] << " ";
+    }
+    std::cout << '\n';
 }

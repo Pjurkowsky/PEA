@@ -98,12 +98,18 @@ bool Menu::run()
                 }
                 else if (chosenItemString == "run algorithm")
                 {
+                    Timer timer;
                     std::vector<int> path;
                     std::vector<bool> visited(graph->getNumVertices(), false);
                     int minCost = INT_MAX;
                     path.push_back(getIntInput("Enter starting vertex: "));
                     visited[path.back()] = true;
+                    timer.start();
                     graph->findHamiltonianCycles(path, visited, minCost);
+                    timer.stop();
+                    std::cout << "Minimum cost: " << minCost << '\n';
+                    graph->printOptimalPath();
+                    std::cout << "Time taken: " << timer.getElapsedTime() << " ms" << '\n';
                     waitForUser();
                 }
 
