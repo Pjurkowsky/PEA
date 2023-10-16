@@ -29,6 +29,10 @@ public:
     //  Method to solve ATSP problem using brute force
     int bruteForceTSP(int startVertex);
 
+    int calculateCost(std::vector<int> &path) const;
+
+    void findHamiltonianCycles(std::vector<int> &path, std::vector<bool> &visited, int &minCost) const;
+
 private:
     // 2D vector to store the weights of edges between vertices
     std::vector<std::vector<int>> adjacencyMatrix;

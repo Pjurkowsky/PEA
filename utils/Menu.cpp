@@ -77,8 +77,33 @@ bool Menu::run()
                     std::cout << graph->toString() << '\n';
                     waitForUser();
                 }
+                else if (chosenItemString == "generate graph")
+                {
+                    RandomGenerator random;
+                    int numVertices = getIntInput("Enter number of vertices: ");
+                    int minWeight = getIntInput("Enter minimum weight: ");
+                    int maxWeight = getIntInput("Enter maximum weight: ");
+                    delete graph;
+                    graph = new Graph(numVertices);
+                    for (int i = 0; i < numVertices; i++)
+                    {
+                        for (int j = 0; j < numVertices; j++)
+                        {
+                            if (i != j)
+                            {
+                                graph->addEdge(i, j, random.generateRandomInt(minWeight, maxWeight));
+                            }
+                        }
+                    }
+                }
                 else if (chosenItemString == "run algorithm")
                 {
+                    std::vector<int> path;
+                    std::vector<bool> visited(graph->getNumVertices(), false);
+                    int minCost = INT_MAX;
+                    path.push_back(getIntInput("Enter starting vertex: "));
+                    visited[path.back()] = true;
+                    graph->findHamiltonianCycles(path, visited, minCost);
                     waitForUser();
                 }
 
