@@ -20,10 +20,7 @@ bool Menu::run()
 
         std::cout << std::string(menuName.length() * 2, '=') << '\n';
         for (auto &item : menuItems)
-        {
-            std::cout << i << ". " << item.str << '\n';
-            i++;
-        }
+            std::cout << i++ << ". " << item.str << '\n';
 
         int choice = getIntInput("Enter your choice: ");
         if (choice > 0 && choice <= menuItems.size())
@@ -86,15 +83,9 @@ bool Menu::run()
                     delete graph;
                     graph = new Graph(numVertices);
                     for (int i = 0; i < numVertices; i++)
-                    {
                         for (int j = 0; j < numVertices; j++)
-                        {
                             if (i != j)
-                            {
                                 graph->addEdge(i, j, random.generateRandomInt(minWeight, maxWeight));
-                            }
-                        }
-                    }
                 }
                 else if (chosenItemString == "run algorithm")
                 {
@@ -109,10 +100,21 @@ bool Menu::run()
                     timer.stop();
                     std::cout << "Minimum cost: " << minCost << '\n';
                     graph->printOptimalPath();
-                    std::cout << "Time taken: " << timer.getElapsedTime() << " ms" << '\n';
+                    std::cout << "Time taken: " << timer.getElapsedTime() << " ns" << '\n';
                     waitForUser();
                 }
+                else if (chosenItemString == "test brute force")
+                {
+                    Tester tester(100);
+                    std::vector<int> inputs;
+                    for (int i = 0; i < 8; i++)
+                        inputs.push_back(getIntInput("Enter number of vertices: "));
 
+                    for (auto &input : inputs)
+                        tester.testBruteForce(input);
+
+                    tester.printResultsToFile("bruteForceResults.txt");
+                }
                 else
                 {
                     std::cout << "Not implemented yet" << std::endl;

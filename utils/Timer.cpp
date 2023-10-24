@@ -9,7 +9,7 @@ void Timer::stop()
 // returns elapsed time
 double Timer::getElapsedTime()
 {
-    auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(end_time - start_time);
+    auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end_time - start_time);
     return elapsed.count();
 }
 

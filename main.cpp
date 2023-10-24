@@ -2,6 +2,7 @@
 #include "utils/Menu.h"
 #include <string.h>
 #include "Graph.h"
+
 std::vector<MenuItem> displayOptions = {{"display matrix", {}},
                                         {"display list", {}},
                                         {"exit", {}}};

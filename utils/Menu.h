@@ -28,6 +28,7 @@ private:
     int getIntInput(std::string message);            // gets int input from
     float getFloatInput(std::string message);        // gets float input from user
     std::string getStringInput(std::string message); // gets string input from user
+
     std::vector<MenuItem> menuItems;
     bool innerLoop;
     std::string menuName;
