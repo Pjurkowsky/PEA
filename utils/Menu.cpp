@@ -87,7 +87,7 @@ bool Menu::run()
                             if (i != j)
                                 graph->addEdge(i, j, random.generateRandomInt(minWeight, maxWeight));
                 }
-                else if (chosenItemString == "run algorithm")
+                else if (chosenItemString == "run algorithm" && menuName == "Brute Force")
                 {
                     Timer timer;
                     std::vector<int> path;
@@ -114,6 +114,39 @@ bool Menu::run()
                         tester.testBruteForce(input);
 
                     tester.printResultsToFile("bruteForceResults.txt");
+                    waitForUser();
+                }
+                else if (chosenItemString == "run algorithm" && menuName == "B&B")
+                {
+                    Timer timer;
+                    std::vector<int> path(graph->getNumVertices(), -1);
+                    std::vector<bool> visited(graph->getNumVertices(), false);
+                    int minCost = INT_MAX;
+                    path[0] = 0;
+                    visited[0] = true;
+                    timer.start();
+                    graph->branchAndBound(path, visited, minCost);
+                    timer.stop();
+                    std::cout << "Minimum cost: " << minCost << '\n';
+                    graph->printOptimalPath();
+                    std::cout << "Time taken: " << timer.getElapsedTime() << " ns" << '\n';
+                     waitForUser();
+                }
+                else if (chosenItemString == "run algorithm" && menuName == "DP")
+                {
+                    Timer timer;
+                    std::vector<int> path(graph->getNumVertices(), -1);
+                    std::vector<bool> visited(graph->getNumVertices(), false);
+                    int minCost = INT_MAX;
+                    path[0] = 0;
+                    visited[0] = true;
+                    timer.start();
+                    graph->dynamicProgramming(path, visited, minCost);
+                    timer.stop();
+                    std::cout << "Minimum cost: " << minCost << '\n';
+                    graph->printOptimalPath();
+                    std::cout << "Time taken: " << timer.getElapsedTime() << " ns" << '\n';
+                     waitForUser();
                 }
                 else
                 {

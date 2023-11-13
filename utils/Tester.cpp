@@ -31,7 +31,7 @@ void Tester::printResultsToFile(std::string fileName)
 void Tester::testBruteForce(int numVertices)
 {
     Graph *graph = new Graph(numVertices);
-    int time = 0;
+    long time = 0;
     generateGraph(graph);
     std::cout << "Testing Brute Force Algorithm with " << numVertices << " vertices" << '\n';
     for (int i = 0; i < numOfTests; i++)
